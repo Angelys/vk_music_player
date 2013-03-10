@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">vk_music_player</string>
+    <string name="username_hint">username</string>
+    <string name="password_hint">password</string>
+    <string name="enter">Enter</string>
 </resources>
