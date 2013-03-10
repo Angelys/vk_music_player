@@ -1,0 +1,3 @@
+[submodule "Android-VKontakte-SDK"]
+	path = Android-VKontakte-SDK
+	url = git@github.com:thest1/Android-VKontakte-SDK.git
