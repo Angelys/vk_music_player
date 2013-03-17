@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="horizontal"
+        >
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="fill_parent"
+              android:textColor="@color/abs__holo_blue_light"
+              android:id="@+id/artist"/>
+    <TextView android:layout_height="fill_parent"
+              android:layout_width="wrap_content"
+              android:text="@string/delimiter"
+              android:paddingLeft="10dp"
+              android:paddingTop="10dp"
+              android:paddingRight="10dp"
+              />
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="fill_parent"
+              android:id="@+id/title"/>
+    <Button android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/like"/>
+    <Button android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/dowload"/>
+</LinearLayout>
