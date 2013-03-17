@@ -23,8 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="org.geekhub.vkPlayer.activities.LoginActivity" />
+        <activity android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" android:name="org.geekhub.vkPlayer.activities.LoginActivity" />
         <activity android:name="org.geekhub.vkPlayer.activities.SettingsActivity"/>
+        <activity android:name=".activities.BaseActivity"/>
     </application>
 
 </manifest>
