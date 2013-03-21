@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.geekhub.vkPlayer"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0" xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -23,9 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" android:name="org.geekhub.vkPlayer.activities.LoginActivity" />
-        <activity android:name="org.geekhub.vkPlayer.activities.SettingsActivity"/>
-        <activity android:name="org.geekhub.vkPlayer.BaseActivity"/>
+        <activity
+            android:name="org.geekhub.vkPlayer.activities.LoginActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" tools:targetApi="14"/>
+        <activity android:name="org.geekhub.vkPlayer.activities.SettingsActivity" />
+        <activity android:name="org.geekhub.vkPlayer.activities.MyAudioActivity" />
+        <activity android:name="org.geekhub.vkPlayer.BaseActivity" />
+
     </application>
 
 </manifest>
