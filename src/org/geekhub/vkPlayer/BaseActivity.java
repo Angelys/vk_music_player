@@ -1,22 +1,21 @@
-package org.geekhub.vkPlayer.activities;
+package org.geekhub.vkPlayer;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 import com.perm.kate.api.Api;
-import org.geekhub.vkPlayer.MainFragment;
+
+
+import org.geekhub.vkPlayer.R;
+import org.geekhub.vkPlayer.activities.LoginActivity;
 import org.geekhub.vkPlayer.utils.Account;
 import org.geekhub.vkPlayer.utils.ConnectionDetector;
 import org.geekhub.vkPlayer.utils.Constants;
 
-/**
- * Created with IntelliJ IDEA.
- * User: angelys
- * Date: 3/17/13
- * Time: 1:37 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class BaseActivity extends FragmentActivity {
 
     public static final int REQUEST_LOGIN=1;
@@ -43,15 +42,42 @@ public class BaseActivity extends FragmentActivity {
             startActivityForResult(intent, REQUEST_LOGIN);
         } else
         {
-            Toast.makeText(this, "Вы не подключены к интернету!", Toast.LENGTH_LONG).show();
+        	pushToFinish();
+        	Toast.makeText(this, "Вы не подключены к интернету!", Toast.LENGTH_LONG).show();
         }
     }
+    
+    private void pushToFinish(){
+    	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+   	 
+		// Setting Dialog Title
+		alertDialogBuilder.setTitle("Internet Connection Error");
+
+		// Setting Dialog Message
+		alertDialogBuilder
+			.setMessage("Please connect to working Internet connection")
+			.setCancelable(false)
+			.setIcon(R.drawable.ic_launcher)
+			.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					// if this button is clicked, close
+					// current activity
+					BaseActivity.this.finish();
+				}
+			 });	
+		// Create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// Showing Alert Message
+		alertDialog.show();		 
+}
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_LOGIN) {
             if (resultCode == RESULT_OK) {
-                //авторизовались успешно
+                //Authorization success
                 account.access_token=data.getStringExtra("token");
                 account.user_id=data.getLongExtra("user_id", 0);
                 account.save(this);

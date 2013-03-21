@@ -1,4 +1,6 @@
-package org.geekhub.vkPlayer;
+package org.geekhub.vkPlayer.fragments;
+
+import org.geekhub.vkPlayer.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

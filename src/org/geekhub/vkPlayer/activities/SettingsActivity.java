@@ -1,5 +1,6 @@
 package org.geekhub.vkPlayer.activities;
 
+import org.geekhub.vkPlayer.BaseActivity;
 import org.geekhub.vkPlayer.R;
 import org.geekhub.vkPlayer.fragments.SettingsFragment;
 import android.os.Bundle;

@@ -17,13 +17,6 @@ import android.support.v4.app.FragmentActivity;
 import org.geekhub.vkPlayer.utils.Constants;
 
 
-/**
- * Created with IntelliJ IDEA.
- * User: angelys
- * Date: 3/10/13
- * Time: 1:42 PM
- * To change this template use File | Settings | File Templates.
- */
 public class LoginActivity extends FragmentActivity {
     private static final String TAG = "LoginActivity";
 
@@ -40,7 +33,7 @@ public class LoginActivity extends FragmentActivity {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.clearCache(true);
 
-        //Чтобы получать уведомления об окончании загрузки страницы
+        //To receive notification of the end of the page load
         webview.setWebViewClient(new VkontakteWebViewClient());
 
         //otherwise CookieManager will fall with java.lang.IllegalStateException: CookieSyncManager::createInstance() needs to be called before CookieSyncManager::getInstance()

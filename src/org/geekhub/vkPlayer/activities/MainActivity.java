@@ -1,15 +1,12 @@
-package org.geekhub.vkPlayer;
+package org.geekhub.vkPlayer.activities;
 
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.Toast;
-import com.perm.kate.api.Api;
-import org.geekhub.vkPlayer.activities.BaseActivity;
-import org.geekhub.vkPlayer.utils.Account;
-import org.geekhub.vkPlayer.utils.Constants;
+import org.geekhub.vkPlayer.BaseActivity;
+import org.geekhub.vkPlayer.R;
+import org.geekhub.vkPlayer.fragments.MainFragment;
 
 public class MainActivity extends BaseActivity {
 
