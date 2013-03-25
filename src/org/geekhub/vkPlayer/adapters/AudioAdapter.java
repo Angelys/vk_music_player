@@ -11,13 +11,7 @@ import org.geekhub.vkPlayer.R;
 
 import java.util.ArrayList;
 
-/**
- * Created with IntelliJ IDEA.
- * User: angelys
- * Date: 3/17/13
- * Time: 6:00 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class AudioAdapter extends ArrayAdapter {
 
     private Context context;

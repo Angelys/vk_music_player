@@ -22,6 +22,7 @@ public class LoginActivity extends FragmentActivity {
 
     private static final String SETTINGS = "10";//Friends(2) + Audio(8)
 
+    
     WebView webview;
 
     @Override
