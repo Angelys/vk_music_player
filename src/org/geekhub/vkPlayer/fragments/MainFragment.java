@@ -1,11 +1,9 @@
 package org.geekhub.vkPlayer.fragments;
 
 import android.media.MediaPlayer;
-import android.nfc.Tag;
 import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.perm.kate.api.Api;
 import com.perm.kate.api.Audio;
@@ -13,7 +11,6 @@ import com.perm.kate.api.KException;
 import org.geekhub.vkPlayer.R;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +33,9 @@ public class MainFragment extends SherlockFragment{
     private MediaPlayer mp = new MediaPlayer();
     private Audio p_a = new Audio();
 
-    private String Tag = "Main_Fragment";
+    private String Tag = "Main_Fragment";    
+    private static int count;
+  
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,32 +54,46 @@ public class MainFragment extends SherlockFragment{
         list = (ListView)getView().findViewById(R.id.list_view);
         list.setAdapter(new AudioAdapter(getActivity(), new ArrayList<Audio>() ));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Audio a = audios.get(i);
-
-                if(p_a.aid == a.aid){
-                    if(mp.isPlaying()){
-                        mp.pause();
-                    } else {
-                        mp.start();
-                    }
-                } else {
-                    mp.reset();
-
-                    try{
-                        mp.setDataSource(a.url);
-                        mp.prepare();
-                        p_a = a;
-                    } catch (IOException e){
-                        Log.d(Tag, "Audio url io exception");
-                    }
-                    mp.start();
-                }
+            
+        	
+        	@Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                 count = i;
+                startPlay();
             }
         });
-        updateList();
+        updateList();       
 
+    }
+    private void startPlay(){
+    	Audio a = audios.get(count);
+    	if(p_a.aid == a.aid){
+            if(mp.isPlaying()){
+                mp.pause();
+            } else {
+                mp.start();
+            }
+        } else {
+            mp.reset();
+
+            try{
+                mp.setDataSource(a.url);
+                mp.prepare();
+                p_a = a;
+            } catch (IOException e){
+                Log.d(Tag, "Audio url io exception");
+            }
+            mp.start();
+            count = count + 1;
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+				
+				@Override
+				public void onCompletion(MediaPlayer mp) {
+					startPlay();
+				}
+			});
+        }
+    	
     }
 
     private void updateList(){
@@ -91,7 +104,8 @@ public class MainFragment extends SherlockFragment{
                 updateAdapter();
             }
         }).start();
-    }
+    }    
+
 
     private void getAudios(){
         try{
