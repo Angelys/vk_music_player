@@ -34,6 +34,7 @@ public class MainFragment extends SherlockFragment{
     private ArrayList<Audio> audios;
     private ListView list;
     private MediaPlayer mp = new MediaPlayer();
+    private Audio p_a = new Audio();
 
     private String Tag = "Main_Fragment";
 	
@@ -56,17 +57,26 @@ public class MainFragment extends SherlockFragment{
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(mp.isPlaying()){
-                    mp.reset();
-                }
+                Audio a = audios.get(i);
 
-                try{
-                    mp.setDataSource(audios.get(i).url);
-                    mp.prepare();
-                } catch (IOException e){
-                    Log.d(Tag, "Audio url io exception");
+                if(p_a.aid == a.aid){
+                    if(mp.isPlaying()){
+                        mp.pause();
+                    } else {
+                        mp.start();
+                    }
+                } else {
+                    mp.reset();
+
+                    try{
+                        mp.setDataSource(a.url);
+                        mp.prepare();
+                        p_a = a;
+                    } catch (IOException e){
+                        Log.d(Tag, "Audio url io exception");
+                    }
+                    mp.start();
                 }
-                mp.start();
             }
         });
         updateList();
