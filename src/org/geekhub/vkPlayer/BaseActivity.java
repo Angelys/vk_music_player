@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.perm.kate.api.Api;
 
 
@@ -16,7 +17,7 @@ import org.geekhub.vkPlayer.utils.ConnectionDetector;
 import org.geekhub.vkPlayer.utils.Constants;
 
 
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends SherlockFragmentActivity {
 
     public static final int REQUEST_LOGIN=1;
     protected Api api;
@@ -89,5 +90,14 @@ public class BaseActivity extends FragmentActivity {
     public void onBackPressed(){
         super.onBackPressed();
         //TODO: mb leave app if not authenticated
+    }
+
+    private void showMessage(final String message,final int duration ){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BaseActivity.this, message, duration);
+            }
+        });
     }
 }
