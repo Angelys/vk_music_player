@@ -5,13 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-/**
- * Created with IntelliJ IDEA.
- * User: angelys
- * Date: 3/10/13
- * Time: 12:19 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class Account {
 
     public String access_token;
