@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="horizontal"
-        >
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="fill_parent"
-              android:textColor="@color/abs__holo_blue_light"
-              android:id="@+id/artist"/>
-    <TextView android:layout_height="fill_parent"
-              android:layout_width="wrap_content"
-              android:text="@string/delimiter"
-              android:paddingLeft="10dp"
-              android:paddingTop="10dp"
-              android:paddingRight="10dp"
-              />
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="fill_parent"
-              android:id="@+id/title"/>
+    android:layout_width="fill_parent"
+    android:layout_height="48dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
+
+    <TextView
+        android:id="@+id/artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxWidth="160dp"
+        android:text="soundtrsck"
+        android:textColor="#2B587A"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/delimiter" />
+
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+		android:lines="1"
+		android:ellipsize="end"
+		android:fontFamily="sans-serif"/>
     <!--<Button android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:id="@+id/like"/>
