@@ -28,9 +28,9 @@ public class MainFragment extends SherlockFragment{
 	private View view;
     private Account user = new Account();
     private Api api;
-    private ArrayList<Audio> audios;
+    private ArrayList<Audio> audios = new ArrayList<Audio>();
     private ListView list;
-    private MediaPlayer mp = new MediaPlayer();
+    private static MediaPlayer mp = new MediaPlayer();
     private Audio p_a = new Audio();
 
     private String Tag = "Main_Fragment";    
@@ -51,10 +51,14 @@ public class MainFragment extends SherlockFragment{
 
         api = new Api(user.access_token, Constants.API_ID);
 
+        if(null != savedInstanceState){
+            this.audios = (ArrayList<Audio>)savedInstanceState.getSerializable("audios");
+            this.p_a = (Audio)savedInstanceState.getSerializable("p_audio");
+        }
+
         list = (ListView)getView().findViewById(R.id.list_view);
-        list.setAdapter(new AudioAdapter(getActivity(), new ArrayList<Audio>() ));
+        list.setAdapter(new AudioAdapter(getActivity(), audios ));
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            
         	
         	@Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
@@ -65,6 +69,13 @@ public class MainFragment extends SherlockFragment{
         updateList();       
 
     }
+
+    public void onSaveInstanceState(Bundle out)
+    {
+        out.putSerializable("audios", this.audios);
+        out.putSerializable("p_audio", this.p_a);
+    }
+
     private void startPlay(){
     	Audio a = audios.get(count);
     	if(p_a.aid == a.aid){
