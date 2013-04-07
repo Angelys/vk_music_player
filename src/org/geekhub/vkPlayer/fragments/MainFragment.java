@@ -1,6 +1,6 @@
 package org.geekhub.vkPlayer.fragments;
 
-import android.media.MediaPlayer;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -8,6 +8,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.perm.kate.api.Api;
 import com.perm.kate.api.Audio;
 import com.perm.kate.api.KException;
+import org.geekhub.vkPlayer.PlayerService;
 import org.geekhub.vkPlayer.R;
 
 import android.os.Bundle;
@@ -23,15 +24,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class MainFragment extends SherlockFragment{
+public class MainFragment extends SherlockFragment {
 
 	private View view;
     private Account user = new Account();
     private Api api;
     private ArrayList<Audio> audios = new ArrayList<Audio>();
     private ListView list;
-    private static MediaPlayer mp = new MediaPlayer();
-    private Audio p_a = new Audio();
 
     private String Tag = "Main_Fragment";    
     private static int count;
@@ -53,7 +52,6 @@ public class MainFragment extends SherlockFragment{
 
         if(null != savedInstanceState){
             this.audios = (ArrayList<Audio>)savedInstanceState.getSerializable("audios");
-            this.p_a = (Audio)savedInstanceState.getSerializable("p_audio");
         }
 
         list = (ListView)getView().findViewById(R.id.list_view);
@@ -73,37 +71,26 @@ public class MainFragment extends SherlockFragment{
     public void onSaveInstanceState(Bundle out)
     {
         out.putSerializable("audios", this.audios);
-        out.putSerializable("p_audio", this.p_a);
     }
 
     private void startPlay(){
     	Audio a = audios.get(count);
-    	if(p_a.aid == a.aid){
-            if(mp.isPlaying()){
-                mp.pause();
-            } else {
-                mp.start();
-            }
-        } else {
-            mp.reset();
 
-            try{
-                mp.setDataSource(a.url);
-                mp.prepare();
-                p_a = a;
-            } catch (IOException e){
-                Log.d(Tag, "Audio url io exception");
-            }
-            mp.start();
-            count = count + 1;
-            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-				
-				@Override
-				public void onCompletion(MediaPlayer mp) {
-					startPlay();
-				}
-			});
+        if(PlayerService.INSTANCE != null){
+            PlayerService.INSTANCE.onComplete = new Runnable() {
+                @Override
+                public void run() {
+                    if(PlayerService.INSTANCE != null){
+                        if(audios.get(count + 1) != null){
+                            PlayerService.INSTANCE.play(audios.get(count + 1));
+                            count++;
+                        }
+                    }
+                }
+            };
+            PlayerService.INSTANCE.play(a);
         }
+
     	
     }
 
