@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
-import com.perm.kate.api.Audio;
+import org.geekhub.vkPlayer.utils.Audio;
 
 import java.io.IOException;
 
@@ -76,16 +76,19 @@ public class PlayerService extends Service {
         return null;
     }
 
-    public void play(Audio audio){
+    public void play(com.perm.kate.api.Audio a){
+
+        Audio audio = new Audio(a);
+
         if(player.isPlaying()){
             player.reset();
         }
 
         try{
             if(audio != null){
-                player.setDataSource(audio.url);
+                player.setDataSource(audio.getDataSource(getApplicationContext()));
             } else if(currentSong != null){
-                player.setDataSource(currentSong.url);
+                player.setDataSource(currentSong.getDataSource(getApplicationContext()));
             } else {
                 return;
             }
