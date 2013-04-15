@@ -26,7 +26,7 @@ public class PlayerService extends Service {
     public static PlayerService INSTANCE;
 
     private MediaPlayer player = new MediaPlayer();
-    private int currentSong;
+    private int currentSong = 0;
     private ArrayList<Audio> playlist;
 
     public void onCreate() {
@@ -38,6 +38,7 @@ public class PlayerService extends Service {
             public void onCompletion(MediaPlayer mediaPlayer) {
                 if(playlist != null){
                     next();
+                    play();
                 }
             }
         });
