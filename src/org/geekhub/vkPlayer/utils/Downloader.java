@@ -1,5 +1,6 @@
 package org.geekhub.vkPlayer.utils;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import org.apache.http.util.ByteArrayBuffer;
@@ -11,12 +12,22 @@ import java.net.URLConnection;
 
 public class Downloader {
 
-    public static void DownloadFromUrl(String DownloadUrl, String fileName) {
+    public static void DownloadFromUrl(String DownloadUrl, String fileName, Context context) {
 
         try {
-            File root = android.os.Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
 
-            File dir = new File(root.getAbsolutePath() + "/vk_music_player");
+            File dir;
+
+            if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+                File root = android.os.Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+
+                dir =  new File(root.getAbsolutePath() + "/vk_music_player");
+
+            } else {
+                File root = context.getFilesDir();
+                dir = new File(root.getAbsolutePath());
+            }
+
             if (!dir.exists()) {
                 dir.mkdirs();
             }

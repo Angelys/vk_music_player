@@ -8,7 +8,7 @@
  
         <!-- Artist Title -->
  <LinearLayout
-        android:id="@+id/titlaArtist"
+        android:id="@+id/titleArtist"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -18,7 +18,7 @@
 
         <!-- Current Duration Label -->
         <TextView 
-            android:id="@+id/atrist"
+            android:id="@+id/artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#eeeeee"

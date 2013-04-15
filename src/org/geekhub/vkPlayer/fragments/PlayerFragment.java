@@ -1,6 +1,7 @@
 package org.geekhub.vkPlayer.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import org.geekhub.vkPlayer.adapters.AudioAdapter;
 import org.geekhub.vkPlayer.utils.Constants;
 
 import android.widget.ImageButton;
+import org.geekhub.vkPlayer.utils.Utilities;
 
 import java.util.ArrayList;
 
@@ -28,26 +30,75 @@ import java.util.ArrayList;
 public class PlayerFragment extends SherlockFragment {
 
     View view;
-    
-    final String LOG_TAG = "myLogs";
-    
-    private static int count;
-    
-    PlayerService playerService = new PlayerService();
 
+    public static PlayerFragment INSTANCE;
+
+    private Handler mHandler = new Handler();
+    final String LOG_TAG = "myLogs";
+
+    ImageButton btnPlay;
+    ImageButton btnFwd;
+    ImageButton btnRwd;
+
+    TextView songCurrentDurationLabel;
+    TextView songTotalDurationLabel;
+    TextView artist;
+    TextView trackName;
+
+    SeekBar songProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.player, container, false);
         
-        ImageButton btnPlay = (ImageButton) view.findViewById(R.id.btnPlay);
-        ImageButton btnFwd = (ImageButton) view.findViewById(R.id.btnFwd);
-        ImageButton btnRwd = (ImageButton) view.findViewById(R.id.btnRwd);
+        btnPlay = (ImageButton) view.findViewById(R.id.btnPlay);
+        btnFwd = (ImageButton) view.findViewById(R.id.btnFwd);
+        btnRwd = (ImageButton) view.findViewById(R.id.btnRwd);
         
-        TextView songCurrentDurationLabel = (TextView) view.findViewById(R.id.songCurrentDurationLabel);
-        TextView songTotalDurationLabel = (TextView) view.findViewById(R.id.songTotalDurationLabel);
-        
-        SeekBar songProgressBar = (SeekBar) view.findViewById(R.id.songProgressBar);
+        songCurrentDurationLabel = (TextView) view.findViewById(R.id.songCurrentDurationLabel);
+        songTotalDurationLabel = (TextView) view.findViewById(R.id.songTotalDurationLabel);
+        artist = (TextView) view.findViewById(R.id.artist);
+        trackName = (TextView) view.findViewById(R.id.trackName);
+
+        songProgressBar = (SeekBar) view.findViewById(R.id.songProgressBar);
+
+        songProgressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+
+            }
+
+            /**
+             * When user starts moving the progress handler
+             * */
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // remove message Handler from updating progress bar
+                mHandler.removeCallbacks(mUpdateUITask);
+            }
+
+            /**
+             * When user stops moving the progress hanlder
+             * */
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mHandler.removeCallbacks(mUpdateUITask);
+                if(PlayerService.INSTANCE != null){
+                    int totalDuration = PlayerService.INSTANCE.getDuration();
+                    int currentPosition = Utilities.progressToTimer(seekBar.getProgress(), totalDuration);
+
+                    // forward or backward to certain seconds
+                    PlayerService.INSTANCE.seekTo(currentPosition);
+
+                    // update timer progress again
+                    updateProgressBar();
+                }
+
+            }
+        });
+
+        INSTANCE = this;
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -60,7 +111,6 @@ public class PlayerFragment extends SherlockFragment {
             public void onClick(View v) {
                 if(PlayerService.INSTANCE != null){
                     PlayerService.INSTANCE.prev();
-                    PlayerService.INSTANCE.play();
                 }
             }
         });
@@ -68,35 +118,11 @@ public class PlayerFragment extends SherlockFragment {
             public void onClick(View v) {
                 if(PlayerService.INSTANCE != null){
                     PlayerService.INSTANCE.next();
-                    PlayerService.INSTANCE.play();
                 }
             }
         });
 
-
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(PlayerService.INSTANCE != null){
-                    PlayerService.INSTANCE.play();
-                }
-            }
-        });
-        btnRwd.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(PlayerService.INSTANCE != null){
-                    PlayerService.INSTANCE.prev();
-                    PlayerService.INSTANCE.play();
-                }
-            }
-        });
-        btnFwd.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(PlayerService.INSTANCE != null){
-                    PlayerService.INSTANCE.next();
-                    PlayerService.INSTANCE.play();
-                }
-            }
-        });
+        updateProgressBar();
 
         return view;
     }
@@ -104,11 +130,52 @@ public class PlayerFragment extends SherlockFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
     }
 
     public void onSaveInstanceState(Bundle out){
     }
+
+    public void onDestroy(){
+        INSTANCE = null;
+        super.onDestroy();
+    }
+
+    /**
+     * Update timer on seekbar
+     * */
+    public void updateProgressBar() {
+        mHandler.postDelayed(mUpdateUITask, 100);
+    }
+
+    /**
+     * Background Runnable thread
+     * */
+    private Runnable mUpdateUITask = new Runnable() {
+        public void run() {
+            if(PlayerService.INSTANCE != null){
+                long totalDuration = PlayerService.INSTANCE.getDuration();
+                long currentDuration = PlayerService.INSTANCE.getCurrentPosition();
+
+                Audio audio = PlayerService.INSTANCE.getCurrentSong();
+
+                // Displaying Total Duration time
+                songTotalDurationLabel.setText(""+Utilities.milliSecondsToTimer(totalDuration));
+                // Displaying time completed playing
+                songCurrentDurationLabel.setText(""+Utilities.milliSecondsToTimer(currentDuration));
+
+                artist.setText(audio.artist);
+
+                trackName.setText(audio.title);
+
+                // Updating progress bar
+                int progress = (int)(Utilities.getProgressPercentage(currentDuration, totalDuration));
+                //Log.d("Progress", ""+progress);
+                songProgressBar.setProgress(progress);
+
+                // Running this thread after 100 milliseconds
+                mHandler.postDelayed(this, 100);
+            }
+        }
+    };
 
 }
