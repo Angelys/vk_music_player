@@ -10,37 +10,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
         android:layout_weight="1"/>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0"
-        android:gravity="bottom|fill|center"
-        android:orientation="horizontal" >
-
-       <Button
-           android:id="@+id/btnRwd"
-           android:layout_width="50dp"
-           android:layout_height="50dp"
-           android:layout_gravity="center_horizontal"
-           android:layout_marginLeft="30dp"
-           android:background="@drawable/rewind" />
-
-        <Button
-            android:id="@+id/btnPlay"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/play" />
-
-        <Button
-            android:id="@+id/btnFwd"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/forward" />
-     </LinearLayout>
-    </LinearLayout>
+    <fragment android:name="org.geekhub.vkPlayer.fragments.PlayerFragment"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+            />
+</LinearLayout>

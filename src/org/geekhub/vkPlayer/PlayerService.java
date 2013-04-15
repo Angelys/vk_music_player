@@ -125,6 +125,7 @@ public class PlayerService extends Service {
         Audio audio = null;
         if(playlist != null){
             audio = playlist.get(i);
+            currentSong = i;
         }
 
         try{
