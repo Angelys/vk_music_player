@@ -74,7 +74,9 @@ public class MainFragment extends SherlockFragment {
                 }
             }
         });
-        updateList();       
+        if(null == savedInstanceState){
+            updateList();
+        }
 
     }
 

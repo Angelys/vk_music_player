@@ -50,7 +50,7 @@ public class MainActivity extends SherlockFragmentActivity {
         if (account.isAuthenticated()){
         	Log.d(LOG_TAG, "--- Main Activity - connectionCheck().isisAuthenticated --- TRUE ");
             Toast.makeText(this, "Вы авторизированы!", Toast.LENGTH_LONG).show();
-            startService(new Intent(this, PlayerService.class));
+            startService(new Intent(this, PlayerService.class).putExtra(PlayerService.ACTION_TAG, PlayerService.ACTION_IDLE));
             handleIntentExtras(getIntent());
         }
         else if(cd.isConnectingToInternet()){

@@ -15,17 +15,18 @@ import java.util.ArrayList;
 public class PlayerService extends Service {
 
     final String LOG_T = "PlayerService";
-    final String ACTION_TAG = "Action";
-    final int ACTION_PLAY = 1;
-    final int ACTION_PAUSE = 2;
-    final int ACTION_STOP = 3;
+    public final static String ACTION_TAG = "Action";
+    public final static int ACTION_IDLE = 0;
+    public final static int ACTION_PLAY = 1;
+    public final static int ACTION_PAUSE = 2;
+    public final static int ACTION_STOP = 3;
     
     final String LOG_TAG = "myLogs";
 
     public static PlayerService INSTANCE;
 
     private MediaPlayer player = new MediaPlayer();
-    private int currentSong;
+    private int currentSong = 0;
     private ArrayList<Audio> playlist;
 
     public void onCreate() {
@@ -36,7 +37,7 @@ public class PlayerService extends Service {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 if(playlist != null){
-                    currentSong ++;
+                    next();
                     play();
                 }
             }
@@ -55,17 +56,26 @@ public class PlayerService extends Service {
         Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = " + action);
 
         switch (action){
+            case ACTION_IDLE : {
+                break;
+            }
             case ACTION_PLAY : {
             	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_PLAY");
                 play(0);
+                break;
             }
             case ACTION_PAUSE : {
             	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_PAUSE");
                 pause();
+                break;
             }
             case ACTION_STOP : {
             	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_STOP");
                 stop();
+                break;
+            }
+            default: {
+
             }
         }
         Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- return -- flags = " + flags + "-- startId = " + startId);
@@ -151,6 +161,17 @@ public class PlayerService extends Service {
     }
     
     
+    public void next(){
+        currentSong = (currentSong+1)%playlist.size();
+    }
+
+    public void prev(){
+        currentSong--;
+        if(currentSong < 0){
+            currentSong = playlist.size()-1;
+        }
+    }
+
     public void next(){
         currentSong = (currentSong+1)%playlist.size();
     }
