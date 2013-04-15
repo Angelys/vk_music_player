@@ -74,10 +74,6 @@ public class PlayerFragment extends SherlockFragment {
         });
 
 
-        Button btnPlay = (Button) view.findViewById(R.id.btnPlay);
-        Button btnFwd = (Button) view.findViewById(R.id.btnFwd);
-        Button btnRwd = (Button) view.findViewById(R.id.btnRwd);
-
         btnPlay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(PlayerService.INSTANCE != null){
