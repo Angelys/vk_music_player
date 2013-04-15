@@ -5,6 +5,36 @@
     android:background="#999"
     android:orientation="vertical" >
     
+ 
+        <!-- Artist Title -->
+ <LinearLayout
+        android:id="@+id/titlaArtist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" 
+        android:orientation="horizontal">
+
+        <!-- Current Duration Label -->
+        <TextView 
+            android:id="@+id/atrist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#eeeeee"
+            android:textStyle="bold"
+            android:text="Artist"/>
+        <!-- Total Duration Label -->
+        <TextView 
+            android:id="@+id/trackName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#04cbde"
+            android:textStyle="bold"
+            android:text="Trackname"/> 
+    </LinearLayout>
+    
+    
        <!-- Timer Display -->
     <LinearLayout
         android:id="@+id/timerDisplay"
@@ -54,47 +84,42 @@
 <!-- Player Footer -->
 
     <LinearLayout
-        android:id="@+id/player_footer_bg"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:gravity="center" >
-    	
-        <!-- Player Buttons -->
-        <LinearLayout 
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0"
+            android:gravity="bottom|fill|center"
+            android:orientation="horizontal" >>
             <!-- Previous Button -->
             <ImageButton
                 android:id="@+id/btnRwd" 
                 android:src="@drawable/rewind"
+                
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
             <!-- Backward Button -->
             <ImageButton 
                 android:id="@+id/btnPlay"
-                android:src="@drawable/play"
+                android:src="@drawable/btn_play"
                 android:layout_width="50dp"
+                
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
                 android:layout_height="50dp"/>
             <!-- Forward Button -->
             <ImageButton 
                 android:id="@+id/btnFwd"
                 android:src="@drawable/forward"
+                
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
         </LinearLayout>
     </LinearLayout>
-    
-    
-    
-
-
-    
-
-    </LinearLayout>
+ 
 
 <!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
