@@ -36,44 +36,15 @@ public class MainFragment extends SherlockFragment {
     private ArrayList<Audio> audios = new ArrayList<Audio>();
     private ListView list;
 
-    private String Tag = "Main_Fragment";    
-    private static int count;
+    private String Tag = "Main_Fragment";
     
     final String LOG_TAG = "myLogs";
-    
-    private Button playButton;
   
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	Log.d(LOG_TAG, "--- MainFragment - onCreateView() --- ");
         view = inflater.inflate(R.layout.my_audio, container, false);
-        
-        Button btnPlay = (Button) view.findViewById(R.id.btnPlay);
-        Button btnFwd = (Button) view.findViewById(R.id.btnFwd);
-        Button btnRwd = (Button) view.findViewById(R.id.btnRwd);
-        
-        
-        btnPlay.setOnClickListener(new OnClickListener() {
-          public void onClick(View v) {
-        	  Log.d(LOG_TAG, "--- MainFragment - PLAY PRESSED" + count);
-        	  startPlay();
-          }
-        }); 
-        btnRwd.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-          	  Log.d(LOG_TAG, "--- MainFragment - PLAY PRESSED" + count);
-          	  count = count - 1;
-          	  startPlay();
-            }
-          }); 
-        btnFwd.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-          	  Log.d(LOG_TAG, "--- MainFragment - PLAY PRESSED" + count);
-          	 count = count + 1;
-          	  startPlay();
-            }
-          }); 
         
         return view;
     }
@@ -98,8 +69,9 @@ public class MainFragment extends SherlockFragment {
         	@Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
         		Log.d(LOG_TAG, "--- MainFragment - onItemClick() --- i = " + i + " l = " + l );
-                 count = i;
-                startPlay();
+                if(PlayerService.INSTANCE != null){
+                    PlayerService.INSTANCE.play(i);
+                }
             }
         });
         updateList();       
@@ -111,37 +83,6 @@ public class MainFragment extends SherlockFragment {
         out.putSerializable("audios", this.audios);
     }
 
-    private void startPlay(){
-    	if(count==0){
-    		count = 1;
-    	}
-    	Log.d(LOG_TAG, "--- MainFragment - startPlay() ---");
-    	Audio a = audios.get(count);
-    	Log.d(LOG_TAG, "--- MainFragment - startPlay() -audios.get(count) - count = " + count);
-
-        if(PlayerService.INSTANCE != null){
-        	Log.d(LOG_TAG, "--- MainFragment - startPlay() -(PlayerService.INSTANCE != null)");
-            PlayerService.INSTANCE.onComplete = new Runnable(){
-                @Override
-                public void run() {
-                	Log.d(LOG_TAG, "--- MainFragment - startPlay() -PlayerService.INSTANCE.onComplete = new Runnable()");
-                    if(PlayerService.INSTANCE != null){
-                    	Log.d(LOG_TAG, "--- MainFragment - startPlay() -run() - (PlayerService.INSTANCE != null)");
-                        if(audios.get(count + 1) != null){
-                        	Log.d(LOG_TAG, "--- MainFragment - startPlay() -run() - (audios.get(count + 1) != null)" + count);
-                            PlayerService.INSTANCE.play(audios.get(count + 1));
-                            count++;
-                        }
-                    }
-                }
-            };
-            Log.d(LOG_TAG, "--- MainFragment - startPlay() -PlayerService.INSTANCE.play(a)");
-            PlayerService.INSTANCE.play(a);
-        }
-
-    	
-    }
-
     private void updateList(){
     	Log.d(LOG_TAG, "--- MainFragment - updateList()");
         new Thread(new Runnable() {
@@ -150,6 +91,9 @@ public class MainFragment extends SherlockFragment {
             	Log.d(LOG_TAG, "--- MainFragment - updateList() - new THREAD");
                 getAudios();
                 updateAdapter();
+                if(PlayerService.INSTANCE != null){
+                    PlayerService.INSTANCE.loadPlaylist(audios);
+                }
             }
         }).start();
     }    

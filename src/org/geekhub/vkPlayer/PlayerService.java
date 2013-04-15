@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
-import org.geekhub.vkPlayer.utils.Audio;
+import com.perm.kate.api.Audio;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class PlayerService extends Service {
@@ -24,9 +25,8 @@ public class PlayerService extends Service {
     public static PlayerService INSTANCE;
 
     private MediaPlayer player = new MediaPlayer();
-    private Audio currentSong;
-
-    public Runnable onComplete;
+    private int currentSong;
+    private ArrayList<Audio> playlist;
 
     public void onCreate() {
     	Log.d(LOG_TAG, "--- PlayerService - onCreate() --- ");
@@ -35,10 +35,9 @@ public class PlayerService extends Service {
         player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-            	Log.d(LOG_TAG, "--- PlayerService - onCompletion() --- ");
-                if(onComplete != null){
-                	Log.d(LOG_TAG, "--- PlayerService - onCompletion() ---(onComplete != null) ");
-                    onComplete.run();
+                if(playlist != null){
+                    currentSong ++;
+                    play();
                 }
             }
         });
@@ -58,7 +57,7 @@ public class PlayerService extends Service {
         switch (action){
             case ACTION_PLAY : {
             	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_PLAY");
-                play(null);
+                play(0);
             }
             case ACTION_PAUSE : {
             	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_PAUSE");
@@ -87,23 +86,54 @@ public class PlayerService extends Service {
         return null;
     }
 
-    public void play(com.perm.kate.api.Audio a){
-    	Log.d(LOG_TAG, "--- PlayerService - play(a) --- ");
+    public void loadPlaylist(ArrayList<com.perm.kate.api.Audio> collection){
+        playlist = new ArrayList<Audio>(collection);
+    }
 
-        Audio audio = new Audio(a);
+    public void play(){
+
+        if(player.isPlaying()){
+            player.reset();
+        }
+
+        try{
+            if(playlist != null){
+                Log.d(LOG_TAG, "--- PlayerService - play(a) --- (currentSong != null)");
+                player.setDataSource(new org.geekhub.vkPlayer.utils.Audio(playlist.get(currentSong)).getDataSource(getApplicationContext()));
+            } else {
+                Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - else - RETURN");
+                return;
+            }
+
+            player.prepare();
+            player.start();
+        } catch (IOException e){
+            Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - (IOException e)");
+            Log.e(LOG_T, "PLayer IOException");
+        }
+
+    }
+
+    public void play(int i){
+    	Log.d(LOG_TAG, "--- PlayerService - play(a) --- ");
 
         if(player.isPlaying()){
         	Log.d(LOG_TAG, "--- PlayerService - play(a) --- (player.isPlaying())");
             player.reset();
         }
 
+        Audio audio = null;
+        if(playlist != null){
+            audio = playlist.get(i);
+        }
+
         try{
             if(audio != null){
             	Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null)");
-                player.setDataSource(audio.getDataSource(getApplicationContext()));
-            } else if(currentSong != null){
+                player.setDataSource(new org.geekhub.vkPlayer.utils.Audio(audio).getDataSource(getApplicationContext()));
+            } else if( playlist != null ){
             	Log.d(LOG_TAG, "--- PlayerService - play(a) --- (currentSong != null)");
-                player.setDataSource(currentSong.getDataSource(getApplicationContext()));
+                player.setDataSource(new org.geekhub.vkPlayer.utils.Audio(playlist.get(currentSong)).getDataSource(getApplicationContext()));
             } else {
             	Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - else - RETURN");
                 return;
