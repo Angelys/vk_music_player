@@ -40,9 +40,10 @@ public class PlayerFragment extends SherlockFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.player, container, false);
         
-        ImageButton btnPlay = (ImageButton) view.findViewById(R.id.btnPlay);
-        ImageButton btnFwd = (ImageButton) view.findViewById(R.id.btnFwd);
-        ImageButton btnRwd = (ImageButton) view.findViewById(R.id.btnRwd);
+        Button btnPlay = (Button) view.findViewById(R.id.btnPlay);
+        Button btnFwd = (Button) view.findViewById(R.id.btnFwd);
+        Button btnRwd = (Button) view.findViewById(R.id.btnRwd);
+        Button download = (Button) view.findViewById(R.id.download);
         
         TextView songCurrentDurationLabel = (TextView) view.findViewById(R.id.songCurrentDurationLabel);
         TextView songTotalDurationLabel = (TextView) view.findViewById(R.id.songTotalDurationLabel);
