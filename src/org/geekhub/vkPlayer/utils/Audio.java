@@ -5,13 +5,7 @@ import android.os.Environment;
 
 import java.io.File;
 
-/**
- * Created with IntelliJ IDEA.
- * User: angelys
- * Date: 4/9/13
- * Time: 9:45 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class Audio extends com.perm.kate.api.Audio {
 
     public Audio(com.perm.kate.api.Audio a){

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.perm.kate.api.Api;
@@ -18,6 +19,8 @@ import org.geekhub.vkPlayer.utils.Constants;
 
 
 public class BaseActivity extends SherlockFragmentActivity {
+	
+	final String LOG_TAG = "myLogs";
 
 //    public static final int REQUEST_LOGIN=1;
 //    protected Api api;
@@ -25,6 +28,8 @@ public class BaseActivity extends SherlockFragmentActivity {
 //    ConnectionDetector cd = new ConnectionDetector(this);
 
     public void onCreate(Bundle savedInstanceState) {
+    	Log.d(LOG_TAG, "--- BaseActivity - onCreate() --- ");
+    	
         super.onCreate(savedInstanceState);
 
 //        connectionCheck();

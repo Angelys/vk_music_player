@@ -8,13 +8,7 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created with IntelliJ IDEA.
- * User: angelys
- * Date: 4/9/13
- * Time: 9:58 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class Downloader {
 
     public static void DownloadFromUrl(String DownloadUrl, String fileName) {
