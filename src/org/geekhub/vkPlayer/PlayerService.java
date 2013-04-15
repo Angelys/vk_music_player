@@ -150,6 +150,17 @@ public class PlayerService extends Service {
 
     }
 
+    public void next(){
+        currentSong = (currentSong+1)%playlist.size();
+    }
+
+    public void prev(){
+        currentSong--;
+        if(currentSong < 0){
+            currentSong = playlist.size()-1;
+        }
+    }
+
     public void pause(){
     	Log.d(LOG_TAG, "--- PlayerService - pause() --- ");
         if(player.isPlaying()){
