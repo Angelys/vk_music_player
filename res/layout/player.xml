@@ -24,7 +24,8 @@
             android:paddingRight="5dp"
             android:text="Artist"
             android:textColor="#eeeeee"
-            android:textStyle="bold" />
+            android:textStyle="bold" 
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/dephis"
@@ -40,8 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Trackname"
-            android:textColor="#eeeeee" />
- 
+            android:textColor="#eeeeee" 
+            android:maxLines="2"/> 
     </LinearLayout>
     
     

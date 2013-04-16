@@ -111,7 +111,9 @@ public class MainActivity extends SherlockFragmentActivity {
         }
     }
 
- private void handleIntentExtras(Intent intent) {
+
+    
+    private void handleIntentExtras(Intent intent) {
 	 Log.d(LOG_TAG, "--- Main Activity - handleIntentExtras(intent) - " + intent );
         MainFragment fragment = new MainFragment();
         Log.d(LOG_TAG, "--- Main Activity - handleIntentExtras(intent) - new- MainFragment");

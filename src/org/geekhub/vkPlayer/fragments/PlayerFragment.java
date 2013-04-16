@@ -7,27 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.perm.kate.api.Api;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.perm.kate.api.Audio;
+
+import org.geekhub.vkPlayer.BaseFragment;
 import org.geekhub.vkPlayer.PlayerService;
 import org.geekhub.vkPlayer.R;
-import org.geekhub.vkPlayer.adapters.AudioAdapter;
-import org.geekhub.vkPlayer.utils.Constants;
-
-import android.widget.ImageButton;
 import org.geekhub.vkPlayer.utils.Utilities;
+import org.holoeverywhere.widget.Toast;
 
-import java.util.ArrayList;
 
-
-public class PlayerFragment extends SherlockFragment {
+public class PlayerFragment extends BaseFragment {
 
     View view;
 
@@ -35,8 +32,10 @@ public class PlayerFragment extends SherlockFragment {
 
     private Handler mHandler = new Handler();
     final String LOG_TAG = "myLogs";
+    private Menu mOptionsMenu;
+       
 
-    Button btnPlay;
+    public static Button btnPlay;
     Button btnFwd;
     Button btnRwd;
     Button btnDwn;
@@ -105,7 +104,16 @@ public class PlayerFragment extends SherlockFragment {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(PlayerService.INSTANCE != null){
+//                	if(PlayerService.INSTANCE.player.isPlaying()){
+//                		btnPlay.setBackgroundResource(R.drawable.btn_play);
+//                	}else{
+//                		btnPlay.setBackgroundResource(R.drawable.btn_pause);
+//                	};
+                	Log.d(LOG_TAG, "--- PlayerFragment - play - R.drawable -- " + btnPlay.getBackground().hashCode());
+//                	if(btnPlay.getBackground().getCurrent() == R.drawable.btn_play)
+					// Changing button image to pause button					
                     PlayerService.INSTANCE.play();
+//                    btnPlay.setBackgroundResource(R.drawable.btn_pause);
                 }
             }
         });
@@ -144,6 +152,7 @@ public class PlayerFragment extends SherlockFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     public void onSaveInstanceState(Bundle out){
@@ -160,6 +169,27 @@ public class PlayerFragment extends SherlockFragment {
     public void updateProgressBar() {
         mHandler.postDelayed(mUpdateUITask, 100);
     }
+    
+    
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        mOptionsMenu = menu;
+        menu.findItem(R.id.logOut).setVisible(true);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+	            case R.id.logOut:
+	            	 //to do - Clear token method
+	            	Toast.makeText(getActivity(), "make clearToken method in playerFragment!", Toast.LENGTH_LONG).show();
+	                 break;	            
+	        }
+	        return super.onOptionsItemSelected(item);
+	    }
+    
 
     /**
      * Background Runnable thread

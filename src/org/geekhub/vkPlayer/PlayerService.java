@@ -26,7 +26,7 @@ public class PlayerService extends Service {
 
     public static PlayerService INSTANCE;
 
-    private MediaPlayer player = new MediaPlayer();
+    public static MediaPlayer player = new MediaPlayer();
     private int currentSong = 0;
     private ArrayList<Audio> playlist;
 
@@ -104,16 +104,19 @@ public class PlayerService extends Service {
     }
 
     public void play(){
-
         if(player.isPlaying()){
+        	PlayerFragment.btnPlay.setBackgroundResource(R.drawable.btn_play);
             player.pause();
         } else {
-            player.start();
+        	PlayerFragment.btnPlay.setBackgroundResource(R.drawable.btn_pause);
+        	player.start();
         }
 
     }
 
     public void play(int i){
+    	PlayerFragment.btnPlay.setBackgroundResource(R.drawable.btn_pause);
+    	
     	Log.d(LOG_TAG, "--- PlayerService - play(a) --- ");
 
         if(player.isPlaying()){
@@ -146,11 +149,12 @@ public class PlayerService extends Service {
             Log.e(LOG_T, "PLayer IOException");
         }
 
-
     }
     
 
     public void next(){
+    	PlayerFragment.btnPlay.setBackgroundResource(R.drawable.btn_pause);
+    	
         currentSong = (currentSong+1)%playlist.size();
         player.reset();
 
@@ -166,12 +170,14 @@ public class PlayerService extends Service {
             player.prepare();
             player.start();
         } catch (IOException e){
-            Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - (IOException e)");
+            Log.d(LOG_TAG, "--- PlayerService - next() --- (audio != null) - (IOException e)");
             Log.e(LOG_T, "PLayer IOException");
         }
     }
 
     public void prev(){
+    	PlayerFragment.btnPlay.setBackgroundResource(R.drawable.btn_pause);
+    	
         currentSong--;
         if(currentSong < 0){
             currentSong = playlist.size()-1;
@@ -196,6 +202,7 @@ public class PlayerService extends Service {
     }
 
     public void pause(){
+    	PlayerFragment.btnPlay.setBackgroundResource(R.drawable.btn_play);
     	Log.d(LOG_TAG, "--- PlayerService - pause() --- ");
         if(player.isPlaying()){
         	Log.d(LOG_TAG, "--- PlayerService - pause() ---(player.isPlaying()) ");
@@ -204,6 +211,7 @@ public class PlayerService extends Service {
     }
 
     public void stop(){
+    	PlayerFragment.btnPlay.setBackgroundResource(R.drawable.btn_play);
     	Log.d(LOG_TAG, "--- PlayerService - stop() ---");
         player.stop();
     }
