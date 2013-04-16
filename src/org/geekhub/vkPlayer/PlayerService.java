@@ -214,11 +214,19 @@ public class PlayerService extends Service {
     }
 
     public int getDuration(){
-        return player.getDuration() == Integer.MAX_VALUE?0:player.getDuration();
+        try{
+            return player.getDuration();
+        } catch (IllegalStateException e){
+            return 0;
+        }
     }
 
     public int getCurrentPosition(){
-        return player.getCurrentPosition() == Integer.MAX_VALUE?0:player.getCurrentPosition();
+        try{
+            return player.getCurrentPosition();
+        } catch (IllegalStateException e){
+            return 0;
+        }
     }
 
     public void seekTo(int position){

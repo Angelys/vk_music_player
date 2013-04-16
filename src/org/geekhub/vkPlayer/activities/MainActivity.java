@@ -115,7 +115,7 @@ public class MainActivity extends SherlockFragmentActivity {
                 Log.d(LOG_TAG, "--- Main Activity - onActivityResult --- account.access_token == " + account.access_token);
                 Log.d(LOG_TAG, "--- Main Activity - onActivityResult --- new Api " + Constants.API_ID);
 
-                handleIntentExtras(getIntent());
+                restart();
             } else {
                 finish();
             }

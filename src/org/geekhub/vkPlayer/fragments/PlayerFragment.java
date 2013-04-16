@@ -2,6 +2,7 @@ package org.geekhub.vkPlayer.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -201,13 +202,16 @@ public class PlayerFragment extends BaseFragment {
                             .setMessage("Tapping yes your connection will be disposed.")
                             .setCancelable(false)
                             .setIcon(R.drawable.ic_launcher)
-                            .setPositiveButton("Leave",new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
+                            .setPositiveButton("Leave", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
                                     // if this button is clicked, close
                                     // current activity
                                     Log.d(LOG_TAG, "--- Main Activity - finish()");
                                     account.clear(getActivity().getApplicationContext());
-                                    ((MainActivity)getActivity()).restart();
+                                    if (PlayerService.INSTANCE != null) {
+                                        getActivity().stopService(new Intent(getActivity(), PlayerService.class));
+                                    }
+                                    ((MainActivity) getActivity()).restart();
                                 }
                             }).setNegativeButton("Stay", new DialogInterface.OnClickListener() {
                         @Override
