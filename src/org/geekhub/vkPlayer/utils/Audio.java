@@ -32,17 +32,30 @@ public class Audio extends com.perm.kate.api.Audio {
     }
 
     public void save(final Context context){
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Downloader.DownloadFromUrl(url, getFileName(), context);
+                    Downloader.DownloadFromUrlExternal(url, getFileName());
                 }
             }).start();
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Downloader.DownloadFromUrlInternal(context, url, getFileName());
+                }
+            }).start();
+        }
     }
 
     public String getFilePath(Context context){
         if(isSaved(context)){
-            return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC+"/vk_music_player").getAbsolutePath()+"/"+getFileName();
+            if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+                return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC+"/vk_music_player").getAbsolutePath()+"/"+getFileName();
+            } else {
+                return context.getFilesDir().getAbsolutePath()+'/'+getFileName();
+            }
         }
         return "";
     }
@@ -52,7 +65,6 @@ public class Audio extends com.perm.kate.api.Audio {
     }
 
     public String getDataSource(Context context){
-
         return isSaved(context)?getFilePath(context):url;
     }
 

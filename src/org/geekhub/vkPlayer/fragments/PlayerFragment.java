@@ -26,16 +26,16 @@ import org.holoeverywhere.widget.Toast;
 
 
 public class PlayerFragment extends BaseFragment {
-
-    View view;
+    
+	View view;
 
     public static PlayerFragment INSTANCE;
 
     private Handler mHandler = new Handler();
     final String LOG_TAG = "myLogs";
+
     private Menu mOptionsMenu;
        
-
     public static Button btnPlay;
     Button btnFwd;
     Button btnRwd;
@@ -160,6 +160,7 @@ public class PlayerFragment extends BaseFragment {
     }
 
     public void onDestroy(){
+        mHandler.removeCallbacks(mUpdateUITask);
         INSTANCE = null;
         super.onDestroy();
     }
