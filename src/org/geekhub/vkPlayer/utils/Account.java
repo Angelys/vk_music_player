@@ -35,4 +35,13 @@ public class Account {
         Log.d(LOG_TAG, "--- Account.class - isAuthenticated() ? --- " + isAuthorized);
     	return isAuthorized;
     }
+
+    public void clear(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Editor editor=prefs.edit();
+        editor.remove("access_token");
+        editor.remove("user_id");
+        editor.commit();
+        Log.d(LOG_TAG, "--- Account.class - clear(context)  ");
+    }
 }
