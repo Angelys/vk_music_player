@@ -49,19 +49,16 @@ public class MainActivity extends SherlockFragmentActivity {
 
         if (account.isAuthenticated()){
         	Log.d(LOG_TAG, "--- Main Activity - connectionCheck().isisAuthenticated --- TRUE ");
-            Toast.makeText(this, "Вы авторизированы!", Toast.LENGTH_LONG).show();
             startService(new Intent(this, PlayerService.class).putExtra(PlayerService.ACTION_TAG, PlayerService.ACTION_IDLE));
             handleIntentExtras(getIntent());
         }
         else if(cd.isConnectingToInternet()){
         	Log.d(LOG_TAG, "--- Main Activity - connectionCheck().isConnectingToInternet --- TRUE ");
-            Toast.makeText(this, "Вы не авторизированы!", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, LoginActivity.class);
             Log.d(LOG_TAG, "--- Main Activity - start LoginActivity --- FOR RESULT ");
             startActivityForResult(intent, REQUEST_LOGIN);
         } else{
         	pushToFinish();
-        	Toast.makeText(this, "Вы не подключены к интернету!", Toast.LENGTH_LONG).show();
         }
     }
     

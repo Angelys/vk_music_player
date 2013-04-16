@@ -1,12 +1,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/img_btn_forward_pressed"
+    <item android:drawable="@drawable/av_next_l"
         android:state_focused="true"
         android:state_pressed="true" />
-    <item android:drawable="@drawable/img_btn_forward_pressed"
+    <item android:drawable="@drawable/av_next_l"
         android:state_focused="false"
         android:state_pressed="true" />
-    <item android:drawable="@drawable/img_btn_forward_pressed" android:state_focused="true" />
-    <item android:drawable="@drawable/img_btn_forward"
+    <item android:drawable="@drawable/av_next_l" android:state_focused="true" />
+    <item android:drawable="@drawable/av_next"
         android:state_focused="false"
         android:state_pressed="false" />
 </selector>
