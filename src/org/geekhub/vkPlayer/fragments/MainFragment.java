@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import org.geekhub.vkPlayer.activities.MainActivity;
 import org.geekhub.vkPlayer.adapters.AudioAdapter;
 import org.geekhub.vkPlayer.utils.Account;
 import org.geekhub.vkPlayer.utils.Constants;
@@ -110,6 +111,8 @@ public class MainFragment extends SherlockFragment {
         } catch (JSONException e){
             Log.d(Tag, "Response parse error");
         } catch (KException e){
+            user.clear(getActivity().getApplicationContext());
+            ((MainActivity)getActivity()).restart();
             Log.d(Tag, "Kate exception");
         }
     }

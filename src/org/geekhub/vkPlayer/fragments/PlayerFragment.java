@@ -150,6 +150,7 @@ public class PlayerFragment extends SherlockFragment {
     }
 
     public void onDestroy(){
+        mHandler.removeCallbacks(mUpdateUITask);
         INSTANCE = null;
         super.onDestroy();
     }

@@ -49,7 +49,9 @@ public class MainActivity extends SherlockFragmentActivity {
 
         if (account.isAuthenticated()){
         	Log.d(LOG_TAG, "--- Main Activity - connectionCheck().isisAuthenticated --- TRUE ");
-            startService(new Intent(this, PlayerService.class).putExtra(PlayerService.ACTION_TAG, PlayerService.ACTION_IDLE));
+            if(PlayerService.INSTANCE == null){
+                startService(new Intent(this, PlayerService.class).putExtra(PlayerService.ACTION_TAG, PlayerService.ACTION_IDLE));
+            }
             handleIntentExtras(getIntent());
         }
         else if(cd.isConnectingToInternet()){
@@ -61,7 +63,14 @@ public class MainActivity extends SherlockFragmentActivity {
         	pushToFinish();
         }
     }
-    
+
+    public void restart(){
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+    }
+
     private void pushToFinish(){
     	Log.d(LOG_TAG, "--- Main Activity - pushToFinish() --- ");
     	AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -107,6 +116,8 @@ public class MainActivity extends SherlockFragmentActivity {
                 Log.d(LOG_TAG, "--- Main Activity - onActivityResult --- new Api " + Constants.API_ID);
 
                 handleIntentExtras(getIntent());
+            } else {
+                finish();
             }
         }
     }

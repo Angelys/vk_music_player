@@ -116,10 +116,7 @@ public class PlayerService extends Service {
     public void play(int i){
     	Log.d(LOG_TAG, "--- PlayerService - play(a) --- ");
 
-        if(player.isPlaying()){
-        	Log.d(LOG_TAG, "--- PlayerService - play(a) --- (player.isPlaying())");
-            player.reset();
-        }
+        player.reset();
 
         Audio audio = null;
         if(playlist != null){
@@ -151,7 +148,10 @@ public class PlayerService extends Service {
     
 
     public void next(){
-        currentSong = (currentSong+1)%playlist.size();
+        currentSong++;
+        if(currentSong > (playlist.size()-1)){
+            currentSong = 0;
+        }
         player.reset();
 
         try{
@@ -223,6 +223,6 @@ public class PlayerService extends Service {
     }
 
     public Audio getCurrentSong(){
-        return playlist != null ? playlist.get(currentSong):new Audio();
+        return (playlist != null && playlist.size() != 0)? playlist.get(currentSong):new Audio();
     }
 }
