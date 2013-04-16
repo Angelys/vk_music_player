@@ -11,7 +11,7 @@ public class Account {
 	
 	final String LOG_TAG = "myLogs";
 
-    public String access_token;
+	public String access_token;
     public Long user_id;
 
     public void save(Context context){    	
@@ -34,5 +34,14 @@ public class Account {
         boolean isAuthorized = (access_token != null) && (user_id != 0);
         Log.d(LOG_TAG, "--- Account.class - isAuthenticated() ? --- " + isAuthorized);
     	return isAuthorized;
+    }
+
+    public void clear(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Editor editor=prefs.edit();
+        editor.remove("access_token");
+        editor.remove("user_id");
+        editor.commit();
+        Log.d(LOG_TAG, "--- Account.class - clear(context)  ");
     }
 }

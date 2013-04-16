@@ -20,6 +20,7 @@ import com.perm.kate.api.Audio;
 import org.geekhub.vkPlayer.BaseFragment;
 import org.geekhub.vkPlayer.PlayerService;
 import org.geekhub.vkPlayer.R;
+import org.geekhub.vkPlayer.utils.Account;
 import org.geekhub.vkPlayer.utils.Utilities;
 import org.holoeverywhere.widget.Toast;
 
@@ -184,12 +185,10 @@ public class PlayerFragment extends BaseFragment {
         switch (item.getItemId()) {
 	            case R.id.logOut:
 	            	 //to do - Clear token method
-	            	Toast.makeText(getActivity(), "make clearToken method in playerFragment!", Toast.LENGTH_LONG).show();
 	                 break;	            
 	        }
 	        return super.onOptionsItemSelected(item);
-	    }
-    
+	    }    
 
     /**
      * Background Runnable thread
