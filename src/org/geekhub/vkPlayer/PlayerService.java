@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
 import com.perm.kate.api.Audio;
+import org.geekhub.vkPlayer.fragments.PlayerFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,8 +38,8 @@ public class PlayerService extends Service {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 if(playlist != null){
+                    mediaPlayer.reset();
                     next();
-                    play();
                 }
             }
         });
@@ -50,35 +51,37 @@ public class PlayerService extends Service {
     	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- flags = " + flags + "startId" + startId);
 
     	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- intent = " + intent);
-    	
-    	
-    	int action = intent.getIntExtra(ACTION_TAG, 0);
-        Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = " + action);
 
-        switch (action){
-            case ACTION_IDLE : {
-                break;
-            }
-            case ACTION_PLAY : {
-            	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_PLAY");
-                play(0);
-                break;
-            }
-            case ACTION_PAUSE : {
-            	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_PAUSE");
-                pause();
-                break;
-            }
-            case ACTION_STOP : {
-            	Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_STOP");
-                stop();
-                break;
-            }
-            default: {
+        if(intent != null){
+            int action = intent.getIntExtra(ACTION_TAG, 0);
+            Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = " + action);
 
+            switch (action){
+                case ACTION_IDLE : {
+                    break;
+                }
+                case ACTION_PLAY : {
+                    Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_PLAY");
+                    play(0);
+                    break;
+                }
+                case ACTION_PAUSE : {
+                    Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_PAUSE");
+                    pause();
+                    break;
+                }
+                case ACTION_STOP : {
+                    Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- action = ACTION_STOP");
+                    stop();
+                    break;
+                }
+                default: {
+
+                }
             }
+            Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- return -- flags = " + flags + "-- startId = " + startId);
         }
-        Log.d(LOG_TAG, "--- PlayerService - onStartCommand() --- return -- flags = " + flags + "-- startId = " + startId);
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -103,23 +106,9 @@ public class PlayerService extends Service {
     public void play(){
 
         if(player.isPlaying()){
-            player.reset();
-        }
-
-        try{
-            if(playlist != null){
-                Log.d(LOG_TAG, "--- PlayerService - play(a) --- (currentSong != null)");
-                player.setDataSource(new org.geekhub.vkPlayer.utils.Audio(playlist.get(currentSong)).getDataSource(getApplicationContext()));
-            } else {
-                Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - else - RETURN");
-                return;
-            }
-
-            player.prepare();
+            player.pause();
+        } else {
             player.start();
-        } catch (IOException e){
-            Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - (IOException e)");
-            Log.e(LOG_T, "PLayer IOException");
         }
 
     }
@@ -163,12 +152,46 @@ public class PlayerService extends Service {
 
     public void next(){
         currentSong = (currentSong+1)%playlist.size();
+        player.reset();
+
+        try{
+            if(playlist != null){
+                Log.d(LOG_TAG, "--- PlayerService - play(a) --- (currentSong != null)");
+                player.setDataSource(new org.geekhub.vkPlayer.utils.Audio(playlist.get(currentSong)).getDataSource(getApplicationContext()));
+            } else {
+                Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - else - RETURN");
+                return;
+            }
+
+            player.prepare();
+            player.start();
+        } catch (IOException e){
+            Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - (IOException e)");
+            Log.e(LOG_T, "PLayer IOException");
+        }
     }
 
     public void prev(){
         currentSong--;
         if(currentSong < 0){
             currentSong = playlist.size()-1;
+        }
+        player.reset();
+
+        try{
+            if(playlist != null){
+                Log.d(LOG_TAG, "--- PlayerService - play(a) --- (currentSong != null)");
+                player.setDataSource(new org.geekhub.vkPlayer.utils.Audio(playlist.get(currentSong)).getDataSource(getApplicationContext()));
+            } else {
+                Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - else - RETURN");
+                return;
+            }
+
+            player.prepare();
+            player.start();
+        } catch (IOException e){
+            Log.d(LOG_TAG, "--- PlayerService - play(a) --- (audio != null) - (IOException e)");
+            Log.e(LOG_T, "PLayer IOException");
         }
     }
 
@@ -183,5 +206,23 @@ public class PlayerService extends Service {
     public void stop(){
     	Log.d(LOG_TAG, "--- PlayerService - stop() ---");
         player.stop();
+    }
+
+    public int getDuration(){
+        return player.getDuration() == Integer.MAX_VALUE?0:player.getDuration();
+    }
+
+    public int getCurrentPosition(){
+        return player.getCurrentPosition() == Integer.MAX_VALUE?0:player.getCurrentPosition();
+    }
+
+    public void seekTo(int position){
+        if(player!= null ){
+            player.seekTo(position);
+        }
+    }
+
+    public Audio getCurrentSong(){
+        return playlist != null ? playlist.get(currentSong):new Audio();
     }
 }

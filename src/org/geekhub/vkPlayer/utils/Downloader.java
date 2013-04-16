@@ -1,5 +1,6 @@
 package org.geekhub.vkPlayer.utils;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import org.apache.http.util.ByteArrayBuffer;
@@ -11,18 +12,29 @@ import java.net.URLConnection;
 
 public class Downloader {
 
-    public static void DownloadFromUrl(String DownloadUrl, String fileName) {
+    public static void DownloadFromUrl(String DownloadUrl, String fileName, Context context) {
 
-        try {
+        File dir;
+
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
             File root = android.os.Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
 
-            File dir = new File(root.getAbsolutePath() + "/vk_music_player");
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
+            dir =  new File(root.getAbsolutePath() + "/vk_music_player");
+
+        } else {
+            File root = context.getFilesDir();
+            dir = new File(root.getAbsolutePath());
+        }
+
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        File file = new File(dir, fileName+".tmp");
+
+        try {
 
             URL url = new URL(DownloadUrl); //you can write here any link
-            File file = new File(dir, fileName);
 
             long startTime = System.currentTimeMillis();
             Log.d("DownloadManager", "download begining");
@@ -55,8 +67,11 @@ public class Downloader {
             fos.close();
             Log.d("DownloadManager", "download ready in" + ((System.currentTimeMillis() - startTime) / 1000) + " sec");
 
+            file.renameTo(new File(dir, fileName));
+
         } catch (IOException e) {
             Log.d("DownloadManager", "Error: " + e);
+            file.delete();
         }
 
     }

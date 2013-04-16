@@ -3,23 +3,22 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="#5F7FA2"
-    android:orientation="vertical" >
-    
+    android:orientation="vertical" >    
  
         <!-- Artist Title -->
 
  <LinearLayout
-     android:id="@+id/titlaArtist"
+     android:id="@+id/titleArtist"
      android:layout_width="fill_parent"
      android:layout_height="wrap_content"
-     android:layout_marginBottom="3dp"
-     android:layout_marginLeft="16dp"
-     android:layout_marginRight="16dp"
-     android:layout_marginTop="5dp"
-     android:orientation="horizontal" >
+     android:layout_marginBottom="5dp"
+     android:layout_marginLeft="20dp"
+     android:layout_marginRight="20dp"
+     android:orientation="horizontal"
+     android:paddingTop="3dp" >
 
-        <TextView
-            android:id="@+id/atrist"
+        <TextView 
+            android:id="@+id/artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
@@ -47,7 +46,6 @@
     
     
        <!-- Timer Display -->
-
     <LinearLayout
         android:id="@+id/timerDisplay"
         android:layout_width="fill_parent"
@@ -56,7 +54,6 @@
         android:layout_marginRight="10dp" >
 
         <!-- Current Duration Label -->
-
         <TextView
             android:id="@+id/songCurrentDurationLabel"
             android:layout_width="wrap_content"
@@ -74,8 +71,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:layout_weight="1"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
