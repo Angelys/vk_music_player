@@ -36,7 +36,7 @@ public class PlayerFragment extends SherlockFragment {
     private Handler mHandler = new Handler();
     final String LOG_TAG = "myLogs";
 
-    Button btnPlay;
+    public Button btnPlay;
     Button btnFwd;
     Button btnRwd;
     Button btnDwn;

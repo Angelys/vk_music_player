@@ -107,13 +107,16 @@ public class PlayerService extends Service {
 
         if(player.isPlaying()){
             player.pause();
+            setBackGroundButton(true);
         } else {
             player.start();
+            setBackGroundButton(false);
         }
 
     }
 
     public void play(int i){
+        setBackGroundButton(false);
     	Log.d(LOG_TAG, "--- PlayerService - play(a) --- ");
 
         player.reset();
@@ -148,6 +151,7 @@ public class PlayerService extends Service {
     
 
     public void next(){
+        setBackGroundButton(false);
         currentSong++;
         if(currentSong > (playlist.size()-1)){
             currentSong = 0;
@@ -172,6 +176,8 @@ public class PlayerService extends Service {
     }
 
     public void prev(){
+        setBackGroundButton(false);
+
         currentSong--;
         if(currentSong < 0){
             currentSong = playlist.size()-1;
@@ -196,6 +202,7 @@ public class PlayerService extends Service {
     }
 
     public void pause(){
+        setBackGroundButton(true);
     	Log.d(LOG_TAG, "--- PlayerService - pause() --- ");
         if(player.isPlaying()){
         	Log.d(LOG_TAG, "--- PlayerService - pause() ---(player.isPlaying()) ");
@@ -204,6 +211,7 @@ public class PlayerService extends Service {
     }
 
     public void stop(){
+        setBackGroundButton(true);
     	Log.d(LOG_TAG, "--- PlayerService - stop() ---");
         player.stop();
     }
@@ -224,5 +232,12 @@ public class PlayerService extends Service {
 
     public Audio getCurrentSong(){
         return (playlist != null && playlist.size() != 0)? playlist.get(currentSong):new Audio();
+    }
+
+    public void setBackGroundButton(boolean play){
+
+        if(PlayerService.INSTANCE != null){
+            PlayerFragment.INSTANCE.btnPlay.setBackgroundResource(play?R.drawable.btn_play:R.drawable.btn_pause);
+        }
     }
 }
