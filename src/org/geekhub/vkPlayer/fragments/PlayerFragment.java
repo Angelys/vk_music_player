@@ -36,9 +36,10 @@ public class PlayerFragment extends SherlockFragment {
     private Handler mHandler = new Handler();
     final String LOG_TAG = "myLogs";
 
-    ImageButton btnPlay;
-    ImageButton btnFwd;
-    ImageButton btnRwd;
+    Button btnPlay;
+    Button btnFwd;
+    Button btnRwd;
+    Button btnDwn;
 
     TextView songCurrentDurationLabel;
     TextView songTotalDurationLabel;
@@ -50,10 +51,11 @@ public class PlayerFragment extends SherlockFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.player, container, false);
-        
-        btnPlay = (ImageButton) view.findViewById(R.id.btnPlay);
-        btnFwd = (ImageButton) view.findViewById(R.id.btnFwd);
-        btnRwd = (ImageButton) view.findViewById(R.id.btnRwd);
+
+        btnPlay = (Button) view.findViewById(R.id.btnPlay);
+        btnFwd = (Button) view.findViewById(R.id.btnFwd);
+        btnRwd = (Button) view.findViewById(R.id.btnRwd);
+        btnDwn = (Button) view.findViewById(R.id.download);
         
         songCurrentDurationLabel = (TextView) view.findViewById(R.id.songCurrentDurationLabel);
         songTotalDurationLabel = (TextView) view.findViewById(R.id.songTotalDurationLabel);
@@ -122,6 +124,18 @@ public class PlayerFragment extends SherlockFragment {
             }
         });
 
+        btnDwn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(PlayerService.INSTANCE != null){
+                    org.geekhub.vkPlayer.utils.Audio a = new org.geekhub.vkPlayer.utils.Audio(PlayerService.INSTANCE.getCurrentSong());
+                    if(!a.isSaved(getActivity())){
+                        a.save(getActivity());
+                    }
+                }
+            }
+        });
+
         updateProgressBar();
 
         return view;
@@ -166,6 +180,8 @@ public class PlayerFragment extends SherlockFragment {
                 artist.setText(audio.artist);
 
                 trackName.setText(audio.title);
+
+                btnDwn.setVisibility((new org.geekhub.vkPlayer.utils.Audio(audio)).isSaved(getActivity())?1:0);
 
                 // Updating progress bar
                 int progress = (int)(Utilities.getProgressPercentage(currentDuration, totalDuration));

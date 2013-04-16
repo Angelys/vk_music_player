@@ -15,8 +15,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" 
         android:orientation="horizontal">
-
-        <!-- Current Duration Label -->
         <TextView 
             android:id="@+id/artist"
             android:layout_width="wrap_content"
@@ -24,7 +22,6 @@
             android:textColor="#eeeeee"
             android:textStyle="bold"
             android:text="Artist"/>
-        <!-- Total Duration Label -->
         <TextView 
             android:id="@+id/trackName"
             android:layout_width="wrap_content"
@@ -36,120 +33,102 @@
     
     
        <!-- Timer Display -->
+
     <LinearLayout
         android:id="@+id/timerDisplay"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
 
         <!-- Current Duration Label -->
-        <TextView 
+
+        <TextView
             android:id="@+id/songCurrentDurationLabel"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
             android:gravity="left"
+            android:text="04:30"
             android:textColor="#eeeeee"
-            android:textStyle="bold"
-            android:text="04:30"/>
-        <!-- Total Duration Label -->
-        <TextView 
-            android:id="@+id/songTotalDurationLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:textColor="#04cbde"
-            android:textStyle="bold"
-            android:text="04:20"/> 
-    </LinearLayout>
-    
-    
-    <!-- Progress Bar/Seek bar -->
+            android:textStyle="bold" />
+        
+        <!-- Progress Bar/Seek bar -->
 
     <SeekBar
         android:id="@+id/songProgressBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_weight="1"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
         android:progressDrawable="@drawable/seekbar_progress"
         android:thumb="@drawable/seek_handler" />
+        
+        <!-- Total Duration Label -->
+
+        <TextView
+            android:id="@+id/songTotalDurationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="right"
+            android:text="04:20"
+            android:textColor="#04cbde"
+            android:textStyle="bold" />
+ 
+    </LinearLayout>
+    
+    
+    
 
 <!-- Player Footer -->
 
     <LinearLayout
         android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0"
-            android:gravity="bottom|fill|center"
-            android:orientation="horizontal" >>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0"
+        android:gravity="bottom|fill|center"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
+
+>
             <!-- Previous Button -->
-            <ImageButton
+            <Button
                 android:id="@+id/btnRwd" 
-                android:src="@drawable/rewind"
-                
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
+                android:background="@drawable/rewind"                
+	            android:layout_gravity="center_horizontal"
+	            android:layout_marginLeft="30dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
-            <!-- Backward Button -->
-            <ImageButton 
+            <!-- Play Button -->
+            <Button 
                 android:id="@+id/btnPlay"
-                android:src="@drawable/btn_play"
-                android:layout_width="50dp"
-                
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
+                android:background="@drawable/play"
+                android:layout_width="50dp"                
+	            android:layout_gravity="center_horizontal"
+	            android:layout_marginLeft="30dp"
                 android:layout_height="50dp"/>
             <!-- Forward Button -->
-            <ImageButton 
+            <Button 
                 android:id="@+id/btnFwd"
-                android:src="@drawable/forward"
-                
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
+                android:background="@drawable/forward"                
+	            android:layout_gravity="center_horizontal"
+	            android:layout_marginLeft="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+            
+            <Button 
+                android:id="@+id/download"
+                android:background="@drawable/btn_playlist"                
+	            android:layout_gravity="center_horizontal"
+	            android:layout_marginLeft="20dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
         </LinearLayout>
     </LinearLayout>
- 
-
-<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0"
-            android:gravity="bottom|fill|center"
-            android:orientation="horizontal" >
-
-    <Button
-            android:id="@+id/btnRwd"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/rewind" />
-
-    <Button
-            android:id="@+id/btnPlay"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/play" />
-
-    <Button
-            android:id="@+id/btnFwd"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/forward" />
-</LinearLayout> -->

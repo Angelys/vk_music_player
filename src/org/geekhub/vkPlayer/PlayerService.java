@@ -40,7 +40,6 @@ public class PlayerService extends Service {
                 if(playlist != null){
                     mediaPlayer.reset();
                     next();
-                    play();
                 }
             }
         });
@@ -153,9 +152,7 @@ public class PlayerService extends Service {
 
     public void next(){
         currentSong = (currentSong+1)%playlist.size();
-        if(player.isPlaying()){
-            player.reset();
-        }
+        player.reset();
 
         try{
             if(playlist != null){
@@ -179,9 +176,7 @@ public class PlayerService extends Service {
         if(currentSong < 0){
             currentSong = playlist.size()-1;
         }
-        if(player.isPlaying()){
-            player.reset();
-        }
+        player.reset();
 
         try{
             if(playlist != null){

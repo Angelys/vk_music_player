@@ -14,26 +14,27 @@ public class Downloader {
 
     public static void DownloadFromUrl(String DownloadUrl, String fileName, Context context) {
 
+        File dir;
+
+        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+            File root = android.os.Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+
+            dir =  new File(root.getAbsolutePath() + "/vk_music_player");
+
+        } else {
+            File root = context.getFilesDir();
+            dir = new File(root.getAbsolutePath());
+        }
+
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        File file = new File(dir, fileName+".tmp");
+
         try {
 
-            File dir;
-
-            if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
-                File root = android.os.Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-
-                dir =  new File(root.getAbsolutePath() + "/vk_music_player");
-
-            } else {
-                File root = context.getFilesDir();
-                dir = new File(root.getAbsolutePath());
-            }
-
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
             URL url = new URL(DownloadUrl); //you can write here any link
-            File file = new File(dir, fileName);
 
             long startTime = System.currentTimeMillis();
             Log.d("DownloadManager", "download begining");
@@ -66,8 +67,11 @@ public class Downloader {
             fos.close();
             Log.d("DownloadManager", "download ready in" + ((System.currentTimeMillis() - startTime) / 1000) + " sec");
 
+            file.renameTo(new File(dir, fileName));
+
         } catch (IOException e) {
             Log.d("DownloadManager", "Error: " + e);
+            file.delete();
         }
 
     }
