@@ -1,5 +1,7 @@
 package org.geekhub.vkPlayer.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,6 +22,7 @@ import com.perm.kate.api.Audio;
 import org.geekhub.vkPlayer.BaseFragment;
 import org.geekhub.vkPlayer.PlayerService;
 import org.geekhub.vkPlayer.R;
+import org.geekhub.vkPlayer.activities.MainActivity;
 import org.geekhub.vkPlayer.utils.Account;
 import org.geekhub.vkPlayer.utils.Utilities;
 import org.holoeverywhere.widget.Toast;
@@ -185,8 +188,40 @@ public class PlayerFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 	            case R.id.logOut:
-	            	 //to do - Clear token method
-	                 break;	            
+                    final Account account = new Account();
+                    account.restore(getActivity().getApplicationContext());
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+
+                    // Setting Dialog Title
+                    alertDialogBuilder.setTitle("Are you sure ?");
+
+                    // Setting Dialog Message
+                    alertDialogBuilder
+                            .setMessage("Tapping yes your connection will be disposed.")
+                            .setCancelable(false)
+                            .setIcon(R.drawable.ic_launcher)
+                            .setPositiveButton("Leave",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    // if this button is clicked, close
+                                    // current activity
+                                    Log.d(LOG_TAG, "--- Main Activity - finish()");
+                                    account.clear(getActivity().getApplicationContext());
+                                    ((MainActivity)getActivity()).restart();
+                                }
+                            }).setNegativeButton("Stay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    // Create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    // Showing Alert Message
+                    alertDialog.show();
+
+                    break;
 	        }
 	        return super.onOptionsItemSelected(item);
 	    }    

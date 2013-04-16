@@ -30,7 +30,6 @@
         <activity
             android:name="org.geekhub.vkPlayer.activities.LoginActivity"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen" tools:targetApi="14"/>
-        <activity android:name="org.geekhub.vkPlayer.activities.SettingsActivity" />
         <activity android:name="org.geekhub.vkPlayer.activities.MyAudioActivity" />
         <activity android:name="org.geekhub.vkPlayer.BaseActivity" />
         <service android:name=".PlayerService"  />

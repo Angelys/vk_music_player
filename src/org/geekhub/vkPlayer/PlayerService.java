@@ -147,8 +147,7 @@ public class PlayerService extends Service {
     }
     
 
-    public void next(){    	
-        currentSong = (currentSong+1)%playlist.size();
+    public void next(){
         setBackGroundButton(false);
         currentSong++;
         if(currentSong > (playlist.size()-1)){
