@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="left"
-            android:text="00:30"
+            android:text="00:00"
             android:textColor="#eeeeee"
             android:textStyle="bold" />
         
@@ -141,6 +141,7 @@
                 android:id="@+id/download"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:gravity="right"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="40dp"
                 android:background="@drawable/btn_playlist" />

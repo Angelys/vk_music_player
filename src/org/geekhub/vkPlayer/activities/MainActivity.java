@@ -122,7 +122,6 @@ public class MainActivity extends SherlockFragmentActivity {
         }
     }
 
-
     
     private void handleIntentExtras(Intent intent) {
 	 Log.d(LOG_TAG, "--- Main Activity - handleIntentExtras(intent) - " + intent );
