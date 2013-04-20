@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -26,18 +24,13 @@ import org.geekhub.vkPlayer.R;
 import org.geekhub.vkPlayer.activities.MainActivity;
 import org.geekhub.vkPlayer.utils.Account;
 import org.geekhub.vkPlayer.utils.Utilities;
-import org.holoeverywhere.widget.Toast;
 
 
 public class PlayerFragment extends BaseFragment {
     
 	View view;
-
     public static PlayerFragment INSTANCE;
-
     private Handler mHandler = new Handler();
-    final String LOG_TAG = "myLogs";
-
     private Menu mOptionsMenu;
        
     public static Button btnPlay;
@@ -49,7 +42,6 @@ public class PlayerFragment extends BaseFragment {
     TextView songTotalDurationLabel;
     TextView artist;
     TextView trackName;
-
     SeekBar songProgressBar;
 
     @Override
@@ -67,12 +59,10 @@ public class PlayerFragment extends BaseFragment {
         trackName = (TextView) view.findViewById(R.id.trackName);
 
         songProgressBar = (SeekBar) view.findViewById(R.id.songProgressBar);
-
         songProgressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-
             }
 
             /**
@@ -100,7 +90,6 @@ public class PlayerFragment extends BaseFragment {
                     // update timer progress again
                     updateProgressBar();
                 }
-
             }
         });
 
@@ -114,7 +103,6 @@ public class PlayerFragment extends BaseFragment {
 //                	}else{
 //                		btnPlay.setBackgroundResource(R.drawable.btn_pause);
 //                	};
-                	Log.d(LOG_TAG, "--- PlayerFragment - play - R.drawable -- " + btnPlay.getBackground().hashCode());
 //                	if(btnPlay.getBackground().getCurrent() == R.drawable.btn_play)
 					// Changing button image to pause button					
                     PlayerService.INSTANCE.play();
@@ -174,8 +162,7 @@ public class PlayerFragment extends BaseFragment {
      * */
     public void updateProgressBar() {
         mHandler.postDelayed(mUpdateUITask, 100);
-    }
-    
+    }    
     
     
     @Override
@@ -206,7 +193,6 @@ public class PlayerFragment extends BaseFragment {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // if this button is clicked, close
                                     // current activity
-                                    Log.d(LOG_TAG, "--- Main Activity - finish()");
                                     account.clear(getActivity().getApplicationContext());
                                     if (PlayerService.INSTANCE != null) {
                                         getActivity().stopService(new Intent(getActivity(), PlayerService.class));

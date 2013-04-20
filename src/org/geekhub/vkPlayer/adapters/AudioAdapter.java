@@ -47,9 +47,7 @@ public class AudioAdapter extends ArrayAdapter {
         } else {
             viewHolder = (ViewHolder)convertView.getTag();
         }
-
         viewHolder.artist.setText(values.get(position).artist);
-
         viewHolder.title.setText(values.get(position).title);
 
         return convertView;

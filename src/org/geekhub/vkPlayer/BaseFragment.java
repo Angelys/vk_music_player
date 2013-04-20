@@ -12,7 +12,6 @@ public class BaseFragment extends SherlockFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -20,5 +19,4 @@ public class BaseFragment extends SherlockFragment{
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.main, menu);
     }
-
 }

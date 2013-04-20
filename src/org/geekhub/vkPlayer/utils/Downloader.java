@@ -48,7 +48,6 @@ public class Downloader {
                 baf.append((byte) current);
             }
 
-
             /* Convert the Bytes read to a String. */
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(baf.toByteArray());

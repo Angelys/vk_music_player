@@ -2,7 +2,6 @@ package org.geekhub.vkPlayer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import org.geekhub.vkPlayer.activities.MainActivity;
@@ -10,11 +9,8 @@ import org.geekhub.vkPlayer.activities.MainActivity;
 
 public class BaseActivity extends SherlockFragmentActivity {
 	
-	final String LOG_TAG = "myLogs";
-
 
     public void onCreate(Bundle savedInstanceState) {
-    	Log.d(LOG_TAG, "--- BaseActivity - onCreate() --- ");
     	
         super.onCreate(savedInstanceState);
     }
